@@ -1,0 +1,9 @@
+sources:
+  - name: bakehouse
+    catalog: databricks_cookies_dataset_dais_2024
+    schema: sales
+    tables:
+      - name: transactions
+      - name: customers
+      - name: franchises
+      - name: suppliers
