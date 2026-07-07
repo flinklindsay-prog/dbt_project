@@ -2,7 +2,18 @@ with
 
 source as (
 
-    select * from {{ source('bakehouse','franchises') }}
+    select 
+    franchiseID as franchise_id
+    ,name
+    ,city
+    ,district
+    ,zipcode
+    ,country
+    ,size
+    ,longitude
+    ,latitude
+    ,supplierID as supplier_id
+    from {{ source('bakehouse','franchises') }}
 
 )
 

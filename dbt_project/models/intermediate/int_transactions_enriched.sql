@@ -15,15 +15,15 @@ suppliers as (
 )
 
 select
-    t.transactionID,
-    t.dateTime as transaction_timestamp,
-    t.customerID,
+    t.transaction_id,
+    t.transaction_timestamp,
+    t.customer_id,
     t.product,
-    t.totalPrice,
-    f.franchiseID,
+    t.total_price,
+    f.franchise_id,
     f.city as franchise_city,
-    f.supplierID,
+    f.supplier_id,
     s.name as supplier_name
 from transactions t
-left join franchises f on t.franchiseID = f.franchiseID
-left join suppliers s on f.supplierID = s.supplierID
+left join franchises f on t.franchise_id = f.franchise_id
+left join suppliers s on f.supplier_id = s.supplier_id

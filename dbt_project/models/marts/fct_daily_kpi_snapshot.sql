@@ -17,8 +17,8 @@ revenue_by_franchise as (
         transaction_timestamp as metric_date,
         'revenue' as metric_name,
         'franchise' as dimension,
-        cast(franchiseID as string) as dimension_value,
-        sum(totalPrice) as metric_value
+        cast(franchise_id as string) as dimension_value,
+        sum(total_price) as metric_value
     from base
     group by 1, 4
 ),
@@ -28,8 +28,8 @@ aov_by_franchise as (
         transaction_timestamp as metric_date,
         'avg_order_value' as metric_name,
         'franchise' as dimension,
-        cast(franchiseID as string) as dimension_value,
-        avg(totalPrice) as metric_value
+        cast(franchise_id as string) as dimension_value,
+        avg(total_price) as metric_value
     from base
     group by 1, 4
 ),
@@ -40,7 +40,7 @@ revenue_by_supplier as (
         'revenue' as metric_name,
         'supplier' as dimension,
         supplier_name as dimension_value,
-        sum(totalPrice) as metric_value
+        sum(total_price) as metric_value
     from base
     group by 1, 4
 ),
@@ -51,7 +51,7 @@ revenue_total as (
         'revenue' as metric_name,
         'company' as dimension,
         'all' as dimension_value,
-        sum(totalPrice) as metric_value
+        sum(total_price) as metric_value
     from base
     group by 1
 )
