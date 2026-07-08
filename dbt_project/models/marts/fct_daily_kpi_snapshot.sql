@@ -6,15 +6,18 @@
 }}
 
 with base as (
-    select * from {{ ref('int_transactions_enriched') }}
+    select
+        *,
+        date_trunc('day', transaction_timestamp) as transaction_date
+    from {{ ref('int_transactions_enriched') }}
     {% if is_incremental() %}
-    where transaction_timestamp > (select max(metric_date) from {{ this }})
+    where date_trunc('day', transaction_timestamp) >= (select max(metric_date) from {{ this }})
     {% endif %}
 ),
 
 revenue_by_franchise as (
     select
-        transaction_timestamp as metric_date,
+        transaction_date as metric_date,
         'revenue' as metric_name,
         'franchise' as dimension,
         cast(franchise_id as string) as dimension_value,
@@ -25,7 +28,7 @@ revenue_by_franchise as (
 
 aov_by_franchise as (
     select
-        transaction_timestamp as metric_date,
+        transaction_date as metric_date,
         'avg_order_value' as metric_name,
         'franchise' as dimension,
         cast(franchise_id as string) as dimension_value,
@@ -36,7 +39,7 @@ aov_by_franchise as (
 
 revenue_by_supplier as (
     select
-        transaction_timestamp as metric_date,
+        transaction_date as metric_date,
         'revenue' as metric_name,
         'supplier' as dimension,
         supplier_name as dimension_value,
@@ -47,7 +50,7 @@ revenue_by_supplier as (
 
 revenue_total as (
     select
-        transaction_timestamp as metric_date,
+        transaction_date as metric_date,
         'revenue' as metric_name,
         'company' as dimension,
         'all' as dimension_value,
