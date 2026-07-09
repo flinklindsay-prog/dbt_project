@@ -53,7 +53,7 @@ revenue_by_customer as (
         transaction_date as metric_date,
         'revenue' as metric_name,
         'customer' as dimension,
-        supplier_name as dimension_value,
+        cast(customer_id as string) as dimension_value,
         sum(total_price) as metric_value
     from base
     group by 1, 4
