@@ -48,6 +48,17 @@ revenue_by_supplier as (
     group by 1, 4
 ),
 
+revenue_by_customer as (
+    select
+        transaction_date as metric_date,
+        'revenue' as metric_name,
+        'customer' as dimension,
+        supplier_name as dimension_value,
+        sum(total_price) as metric_value
+    from base
+    group by 1, 4
+),
+
 revenue_total as (
     select
         transaction_date as metric_date,
@@ -64,5 +75,7 @@ union all
 select * from aov_by_franchise
 union all
 select * from revenue_by_supplier
+union all
+select * from revenue_by_customer
 union all
 select * from revenue_total
