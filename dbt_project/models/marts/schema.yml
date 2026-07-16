@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: fct_daily_kpi_snapshot
+    description: Long-format daily KPI snapshot, incrementally materialized.
+    columns:
+      - name: metric_date
+        description: The day the metric was calculated for.
+        tests:
+          - not_null
+
+      - name: metric_name
+        description: Name of the KPI, e.g. revenue, avg_order_value.
+        tests:
+          - not_null
+
+      - name: dimension
+        description: What the metric is sliced by, e.g. franchise, supplier, company.
+        tests:
+          - not_null
+
+      - name: dimension_value
+        description: The specific value of the dimension, e.g. a franchise_id.
+
+      - name: metric_value
+        description: The calculated metric value for this date, name, and dimension.
+        tests:
+          - not_null
