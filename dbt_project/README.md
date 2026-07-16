@@ -17,7 +17,6 @@ One model per source table. Each model does light cleanup only: type casting, co
 - `stg_bakehouse__sales_franchises`
 - `stg_bakehouse__sales_customers`
 - `stg_bakehouse__sales_suppliers`
-- `stg_bakehouse__media_customer_reviews`
 
 **Intermediate (`models/intermediate/`)**
 `int_transactions_enriched` joins transactions to franchise, supplier, and city context. This is the single denormalized table that every downstream metric pulls from, so join logic lives in one place instead of being repeated across marts.
@@ -51,8 +50,7 @@ These were chosen to span three stakeholder lenses (finance, ops, supply chain) 
 ## What I'd add next
 
 - Review sentiment as a trended KPI, joined in from `media_customer_reviews`
-- dbt tests on the snapshot grain (`unique`, `not_null` on the composite key) and on source freshness
-- A BI dashboard layer reading directly from `fct_daily_kpi_snapshot`
+- Obfuscation for credit card numbers
 - Documentation (`schema.yml` descriptions) for every model and column
 
 ## Running the project
@@ -64,8 +62,3 @@ dbt test
 ```
 
 Connects to a Databricks SQL warehouse via the `dbt-databricks` adapter, reading from `samples.bakehouse`.
-
-
-## What I would do with more time:
-- Set up tests on the models
-- Obfuscate credit card numbers
